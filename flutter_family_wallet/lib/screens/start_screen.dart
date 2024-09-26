@@ -15,7 +15,7 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Family Wallet', style: TextStyle(fontSize: 24)),
+        title: const Text('Wallet Split', style: TextStyle(fontSize: 24)),
         centerTitle: true, // Titel zentriert
       ),
       body: Center(
