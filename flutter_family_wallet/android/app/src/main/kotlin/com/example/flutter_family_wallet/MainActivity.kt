@@ -1,4 +1,4 @@
-package com.example.flutter_family_wallet
+package com.bumblemonkey.walletSplit
 
 import io.flutter.embedding.android.FlutterActivity
 
