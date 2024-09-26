@@ -17,9 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Family Wallet',
+      title: 'WalletSplit',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.teal,  // Hauptfarbe der App
+        scaffoldBackgroundColor: Colors.teal.shade100, // Intergrundfarbe der gesamten App
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: Colors.orangeAccent),
         visualDensity: VisualDensity.adaptivePlatformDensity,
