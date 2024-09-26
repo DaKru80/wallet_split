@@ -2,7 +2,7 @@
     <!-- Required to fetch data from the internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="flutter_family_wallet"
+        android:label="WalletSplit"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
