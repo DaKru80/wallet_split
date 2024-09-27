@@ -115,6 +115,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
   }
 
+  // Farben für die Benutzer 'C' und 'D'
+  Color _getUserColor(String user) {
+    if (user == 'C') {
+      return Color.fromARGB(255, 218, 143, 114); // Farbe für C
+    } else if (user == 'D') {
+      return Color.fromARGB(255, 95, 152, 226); // Farbe für D
+    }
+    return Colors.grey; // Standardfarbe, falls der Benutzer nicht 'C' oder 'D' ist
+  }
+
 // Berechne die Gesamtzahl der Einträge für die Paginierung
   Future<void> _fetchTotalCount() async {
     try {
@@ -375,13 +385,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         final datum = DateTime.parse(item['datum']);
                         final formatter = NumberFormat.currency(
                             locale: 'de_DE', symbol: '€', decimalDigits: 2);
-
-                        // Bestimme den Transaktionstyp basierend auf dem Preis
-                        final isKauf = preis < 0;
-
-                        // Bestimme die Hintergrundfarbe
-                        final rowColor =
-                            isKauf ? Colors.red[100] : Colors.green[100];
+                        
+                         // Bestimme die Hintergrundfarbe
+                        final user = item['benutzer'] ?? 'Unbekannt'; // Nutzername 'C' oder 'D'
+                        final rowColor = _getUserColor(user); // Farbe basierend auf dem Benutzer
 
                         return GestureDetector(
                           onTap: () {

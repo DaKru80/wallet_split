@@ -58,10 +58,7 @@ class _TransactionFormState extends State<TransactionForm> {
       try {
         if (_transactionId != null) {
           // Aktualisiere bestehende Transaktion
-          await supabase
-              .from('transaktionen')
-              .update(transactionData)
-              .eq('id', _transactionId as Object);
+          await _updateTransaction(_transactionId!, transactionData);
         } else {
           // Neue Transaktion erstellen
           await supabase.from('transaktionen').insert(transactionData);
@@ -103,6 +100,39 @@ class _TransactionFormState extends State<TransactionForm> {
       setState(() {
         _datum = neuesDatum;
       });
+    }
+  }
+
+  // Separate Methode zum Aktualisieren der Transaktion und Speichern der alten Werte
+  Future<void> _updateTransaction(int transactionId, Map<String, dynamic> transactionData) async {
+    try {
+      // Vorherige Transaktion abrufen, um den alten Wert zu speichern
+      final previousTransaction = await supabase
+          .from('transaktionen')
+          .select()
+          .eq('id', transactionId)
+          .single();
+
+      // Extrahiere die vorherigen Werte (z.B. Bezeichnung, Preis oder Notiz)
+      String previousContent = '';
+      if (previousTransaction != null) {
+        // Definiere hier, welche Felder überwacht werden sollen, z. B. 'bezeichnung'
+        previousContent = 'Bezeichnung: ${previousTransaction['bezeichnung']}, '
+                          'Preis: ${previousTransaction['preis']}, '
+                          'Notiz: ${previousTransaction['notiz']}';
+      }
+
+      // Füge das 'updated_text'-Feld hinzu, das den alten Wert speichert
+      transactionData['updated_text'] = previousContent;
+
+      // Aktualisiere die bestehende Transaktion
+      await supabase
+          .from('transaktionen')
+          .update(transactionData)
+          .eq('id', transactionId);
+    } catch (error) {
+      //print('Fehler beim Aktualisieren der Transaktion: $error');
+      rethrow; // Fehler weiterleiten, um in _saveTransaction gefangen zu werden
     }
   }
 
